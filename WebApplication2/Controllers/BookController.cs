@@ -19,17 +19,14 @@ namespace WebApplication2.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Book>>> GetAllBooks()
         {
-            var result = _bookService.GetAllBooks();
-            if (result is null)
-                return NotFound("Books not found");
-            return Ok(result);
+            return await _bookService.GetAllBooks();
         }
 
         [HttpGet("{id}")]
         //[Route("{id}")]
         public async Task<ActionResult<List<Book>>> GetBook(int id)
         {
-            var result = _bookService.GetBook(id);
+            var result = await _bookService.GetBook(id);
             if (result is null)
                 return NotFound("Book not found");
             return Ok(result);
@@ -38,7 +35,7 @@ namespace WebApplication2.Controllers
         [HttpPost]
         public async Task<ActionResult<List<Book>>> AddBook(Book book)
         {
-            var result = _bookService.AddBook(book);
+            var result = await _bookService.AddBook(book);
             if (result is null)
                 return NotFound("Book not found");
             return Ok(result);
@@ -48,7 +45,7 @@ namespace WebApplication2.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<List<Book>>> UpdateBook(int id, Book request)
         {
-            var result = _bookService.UpdateBook(id, request);
+            var result = await _bookService.UpdateBook(id, request);
             if (result is null)
                 return NotFound("Book not found");
             return Ok(result);
@@ -57,7 +54,7 @@ namespace WebApplication2.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<Book>>> DeleteBook(int id)
         {
-            var result = _bookService.DeleteBook(id);
+            var result = await _bookService.DeleteBook(id);
             if (result is null)
                 return NotFound("Book not found");
             return Ok(result);

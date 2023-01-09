@@ -1,4 +1,5 @@
 global using WebApplication2.Models;
+using WebApplication2.Data;
 using WebApplication2.Services.BookService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IBookService,BookService>();
+builder.Services.AddDbContext<DataContext>();
 
 var app = builder.Build();
 

@@ -1,60 +1,53 @@
-﻿namespace WebApplication2.Services.BookService
+﻿using WebApplication2.Data;
+
+namespace WebApplication2.Services.BookService
 {
     public class BookService : IBookService
     {
-        private static List<Book> books = new List<Book> {
-                new Book
-                {
-                    Id = 1,
-                    Title = "Kingdom",
-                    Author = "Yohou",
-                    Category = "Manga",
-                    Year="2008"
-                },
-                 new Book
-                 {
-                    Id = 2,
-                    Title = "Kingdom2",
-                    Author = "Yohou2",
-                    Category = "Manga2",
-                    Year="2022"
-                 }
-            };
+        private readonly DataContext _context;
 
-        public List<Book> AddBook(Book book)
+        public BookService(DataContext context)
         {
-            books.Add(book);
-            return books;
+            _context = context;
         }
 
-        public List<Book> DeleteBook(int id)
+        public async Task<List<Book>> AddBook(Book book)
         {
-            var book = books.Find(x => x.Id == id);
+            _context.Books.Add(book);
+            await _context.SaveChangesAsync();
+            return await _context.Books.ToListAsync();
+        }
+
+        public async Task<List<Book>?> DeleteBook(int id)
+        {
+            var book = await _context.Books.FindAsync(id);
             if (book is null)
                 return null;
 
-            books.Remove(book);
+            _context.Books.Remove(book);
+            await _context.SaveChangesAsync();
 
+            return await _context.Books.ToListAsync();
+        }
+
+        public async Task<List<Book>> GetAllBooks()
+        {
+            var books = await _context.Books.ToListAsync();
             return books;
         }
 
-        public List<Book> GetAllBooks()
+        public async Task<Book?> GetBook(int id)
         {
-            return books;
-        }
-
-        public Book GetBook(int id)
-        {
-            var book = books.Find(x => x.Id == id);
+            var book = await _context.Books.FindAsync(id);
             if (book is null)
                 return null;
 
             return book;
         }
 
-        public List<Book> UpdateBook(int id, Book request)
+        public async Task<List<Book>?> UpdateBook(int id, Book request)
         {
-            var book = books.Find(x => x.Id == id);
+            var book = await _context.Books.FindAsync(id);
             if (book is null)
                 return null;
 
@@ -63,7 +56,9 @@
             book.Category = request.Category;
             book.Year = request.Year;
 
-            return books;
+            await _context.SaveChangesAsync();
+
+            return await _context.Books.ToListAsync();
         }
     }
 }
