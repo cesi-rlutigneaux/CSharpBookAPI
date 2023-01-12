@@ -8,7 +8,7 @@
         public string Category { get; set; } = string.Empty;
 
         public int AuthorId { get; set; }
-        public Author? Author { get; set; }
+        public virtual Author? Author { get; set; }
 
         public virtual ICollection<Seller>? Sellers { get; set; }
     }

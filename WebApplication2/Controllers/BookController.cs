@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics.CodeAnalysis;
-using WebApplication2.Models;
 using WebApplication2.Services.BookService;
 
 namespace WebApplication2.Controllers
