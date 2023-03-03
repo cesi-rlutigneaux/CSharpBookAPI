@@ -32,7 +32,7 @@ namespace WebApplication2.Services.BookService
 
         public async Task<List<Book>> GetAllBooks()
         {
-            var books = await _context.Books.Include(p => p.Author).ToListAsync();
+            var books = await _context.Books.Include(b => b.Author).ToListAsync();
             return books;
         }
 
