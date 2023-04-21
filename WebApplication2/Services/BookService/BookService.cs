@@ -38,7 +38,7 @@ namespace WebApplication2.Services.BookService
 
         public async Task<Book?> GetBook(int id)
         {
-            var book = await _context.Books.FindAsync(id);
+            var book = await _context.Books.Include(b => b.Author).FirstOrDefaultAsync();
             if (book is null)
                 return null;
 
